@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+
+    <!-- Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome-->
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/3dc533bf1d.js"></script>
+
+    <!--W3 Animations-->
+    <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+
+    <!-- Page CSS -->
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"/>
+
+    <!-- Page Title-->
+    <title>foodDetective</title>
+</head>
+<body>
+
+<div class="container">
+    <!--Navigation Bar-->
+    <nav class="row shadow my-5 navbar navbar-expand-lg navbar-light">
+        <span class="navbar-brand">foodDetective</span>
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/guestbook">Guest Book</a>
+                </li>
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0">
+                <input aria-label="Search" class="form-control mr-sm-2" placeholder="Search" type="text">
+                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <!--Post Details-->
+    <div class="row shadow mb-5 w3-animate-opacity">
+        <!--Image-->
+        <div class="col-5" id="img" style="background-image: url(../static/postImages/2.jpg);"></div>
+
+        <!--Contents-->
+        <div class="col-7 p-5 d-flex flex-wrap align-content-around justify-content-around">
+
+            <section class="mb-5 container" id="brand">
+                <div class="row">
+                    <div class="col-9">
+                        <h1>THE FLYING BURGER</h1>
+                    </div>
+                    <div class="col-3 pt-1">
+                        <section id="rating">
+                            <span class="badge badge-secondary">7.9</span>
+                        </section>
+                    </div>
+                </div>
+                <h5>WITH BEEF, TURKEY, CHEESE AND FRIES</h5>
+                <span class="badge badge-secondary">BUDGET</span>
+                <span class="badge badge-secondary">BEEF</span>
+                <span class="badge badge-secondary">HALAL</span>
+            </section>
+
+            <section class="container" id="about-brand">
+                <p id="store">Burger Bros has become a restaurant that truly became part of Dubai's Deira since it's
+                    founding in 2001. It's located near by the metro station which enables easy access to yummy burgers
+                    for daily commuters passing by the area.</p>
+                <p class="pt-3" id="review">The burger is juicy and is greatly filling. It's fairly easy to eat the
+                    burger without making a mess. The sauces in this one give a great punch to the overall flavour of
+                    the burger. With a price-tag of 30 AED, it's great value for money.</p>
+            </section>
+
+            <section class="container pt-3" id="prosncons">
+                <div class="row">
+                    <div class="col-6">
+                        <h5>THE GOOD</h5>
+                        <i class="fas fa-check pr-3"></i>Free Wi-Fi <br>
+                        <i class="fas fa-check pr-3"></i>Affordable <br>
+                        <i class="fas fa-check pr-3"></i>Free Toilet <br>
+                    </div>
+                    <div class="col-6">
+                        <h5>THE BAD</h5>
+                        <i class="fas fa-times pr-3"></i>Crowded <br>
+                        <i class="fas fa-times pr-3"></i>Long Queues <br>
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+    </div>
+
+    <!--Comments Section-->
+    <div class="row shadow mb-5 bootstrap snippets d-flex justify-content-center w3-animate-opacity">
+        <div class="comment-wrapper col-10 p-5">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h1>COMMENTS</h1>
+                </div>
+                <div class="panel-body">
+                    <textarea class="form-control" placeholder="Write a comment..."></textarea>
+                    <br>
+                    <button class="btn btn-secondary pull-right" type="button">Post</button>
+
+                    <hr>
+
+                    <div>
+                        <strong>@RidickSmols</strong>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, aspernatur at debitis
+                            eaque error nostrum odio officiis reiciendis sapiente suscipit.
+                        </p>
+                    </div>
+                    <div>
+                        <strong>@Darkness1_</strong>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, aspernatur at debitis
+                            eaque error nostrum odio officiis reiciendis sapiente suscipit.
+                        </p>
+                    </div>
+                    <div>
+                        <strong>@Perissa</strong>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, aspernatur at debitis
+                            eaque error nostrum odio officiis reiciendis sapiente suscipit.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

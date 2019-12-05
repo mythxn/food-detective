@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+    <!-- Bootstrap CSS -->
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+
+    <!-- Google Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome-->
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/3dc533bf1d.js"></script>
+
+    <!--W3 Animations-->
+    <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+
+    <!-- Page CSS -->
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"/>
+
+    <!-- Page Title-->
+    <title>foodDetective</title>
+</head>
+<body>
+
+<div class="container">
+    <!--Navigation Bar-->
+    <nav class="row shadow my-5 navbar navbar-expand-lg navbar-light">
+        <span class="navbar-brand">foodDetective</span>
+        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/guestbook">Guest Book</a>
+                </li>
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0">
+                <input aria-label="Search" class="form-control mr-sm-2" placeholder="Search" type="text">
+                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+
+    <!--Carousel-->
+    <div class="carousel slide" data-ride="carousel" id="food-car">
+
+        <!-- Indicators -->
+        <ul class="carousel-indicators">
+            <li class="active" data-slide-to="0" data-target="#food-car"></li>
+            <li data-slide-to="1" data-target="#food-car"></li>
+            <li data-slide-to="2" data-target="#food-car"></li>
+        </ul>
+
+        <!-- The slideshow -->
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <a href="posts/1"><img height="500" src="static/carouselImages/1.jpg" width="1100"></a>
+                <div class="carousel-caption">
+                    <h3 class="font-weight-bold">ITALIAN VEG PIZZA</h3>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <a href="posts/2"><img height="500" src="static/carouselImages/2.jpg" width="1100"></a>
+                <div class="carousel-caption">
+                    <h3 class="font-weight-bold">THE FLYING BURGER</h3>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <a href="posts/3"><img height="500" src="static/carouselImages/3.jpg" width="1100"></a>
+                <div class="carousel-caption">
+                    <h3 class="font-weight-bold">PURI SABJI</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="carousel-control-prev" data-slide="prev" href="#food-car">
+            <span class="carousel-control-prev-icon"></span>
+        </a>
+        <a class="carousel-control-next" data-slide="next" href="#food-car">
+            <span class="carousel-control-next-icon"></span>
+        </a>
+    </div>
+</div>
+
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script crossorigin="anonymous" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

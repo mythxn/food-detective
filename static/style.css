@@ -1,0 +1,45 @@
+body {
+	font-family: 'Nunito Sans', sans-serif;
+	background-color: #FFFFFB;
+}
+
+#brand > h1 {
+	color: #323841;
+}
+
+#brand > h5 {
+	color: #8a8885;
+}
+
+#brand > .badge {
+	color: #ffffff;
+	background-color: #a89d90;
+}
+
+#about-brand > #store {
+	color: #3d3a3b;
+}
+
+#about-brand > #review {
+	color: #8a8885;
+}
+
+#prosncons {
+	color: #323841;
+}
+
+#rating > .badge {
+	color: #ffffff;
+	background-color: #323841;
+	font-size: 2rem;
+}
+
+#img {
+	background-size: cover;
+	background-position: center;
+}
+
+.carousel-inner img {
+	width: 100%;
+	height: 100%;
+}
