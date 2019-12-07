@@ -30,11 +30,11 @@ def post3():
 
 
 # guestbook
-def _insert(name, email, age):
-    params = {'name': name, 'email': email, 'age': age}
+def _insert(name, email, comment):
+    params = {'name': name, 'email': email, 'comment': comment}
     connection = sqlite3.connect(DB_FILE)
     cursor = connection.cursor()
-    cursor.execute("insert into guestbook VALUES (:name, :email, :age)", params)
+    cursor.execute("insert into guestbook VALUES (:name, :email, :comment)", params)
     connection.commit()
     cursor.close()
 
@@ -51,7 +51,7 @@ def gb():
 
 @app.route('/sign', methods=['POST'])
 def sign():
-    _insert(request.form['name'], request.form['email'], request.form['age'])
+    _insert(request.form['name'], request.form['email'], request.form['comment'])
     return redirect(url_for('gb'))
 
 

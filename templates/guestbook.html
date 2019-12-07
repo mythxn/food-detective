@@ -59,43 +59,37 @@
     </nav>
 
     <!--Guestbook-->
-    <div class="row shadow mb-5 w3-animate-opacity">
-        <div class="col-5">
+    <div class="row shadow p-5 w3-animate-opacity">
+        <!--Comments-->
+        <div class="col-9">
+            {% for entry in entries %}
+            <div>
+                <strong>{{ entry[0]}} - {{ entry[1]}}</strong>
+                <p>
+                    {{ entry[2]}}
+                </p>
+                <hr>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!--Form-->
+        <div class="col-3 border-secondary rounded-lg shadow" style="background-color: #fefefd;">
             {% block content %}
             <form action="{{ url_for('sign') }}" method=post>
                 <dl>
                     <dt>Name
-                    <dd><input name=name type=text>
+                    <dd><input name=name style="width: 100%;" type=text>
                     <dt>Email:
-                    <dd><input name=email type=email>
-                    <dt>Age:
-                    <dd><input name=age type=text>
-                    <dd><input type=submit value=Sign>
+                    <dd><input name=email style="width: 100%;" type=email>
+                    <dt>Comment:
+                    <dd><input name=comment style="width: 100%;" type=text>
+                    <dd><input class="btn btn-secondary" style="width: 100%;" type=submit value=Sign>
                 </dl>
             </form>
             <br>
             {% endblock %}
         </div>
-
-        <div class="col-7">
-            <table border=1>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Age</th>
-                </tr>
-                {% for entry in entries %}
-                <tr>
-                    <td> {{ entry[0]}}</td>
-                    <td> {{ entry[1]}}</td>
-                    <td> {{ entry[2]}}</td>
-                </tr>
-                {% endfor %}
-
-            </table>
-        </div>
-
-
     </div>
 </div>
 
