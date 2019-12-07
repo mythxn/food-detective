@@ -29,6 +29,11 @@ def post3():
     return render_template('posts/3.html')
 
 
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+
 # guestbook
 def _insert(name, email, comment):
     params = {'name': name, 'email': email, 'comment': comment}
