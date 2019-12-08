@@ -29,11 +29,6 @@ def post3():
     return render_template('posts/3.html')
 
 
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
-
 # guestbook
 def _insert(name, email, comment):
     params = {'name': name, 'email': email, 'comment': comment}
@@ -58,6 +53,27 @@ def gb():
 def sign():
     _insert(request.form['name'], request.form['email'], request.form['comment'])
     return redirect(url_for('gb'))
+
+
+# login
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+
+def _newaccount(username, email, password):
+    params = {'username': username, 'email': email, 'password': password}
+    connection = sqlite3.connect(DB_FILE)
+    cursor = connection.cursor()
+    cursor.execute("insert into accounts VALUES (:username, :email, :password)", params)
+    connection.commit()
+    cursor.close()
+
+
+@app.route('/register', methods=['POST'])
+def register():
+    _newaccount(request.form['username'], request.form['email'], request.form['password'])
+    return redirect(url_for('login'))
 
 
 if __name__ == '__main__':

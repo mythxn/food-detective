@@ -40,7 +40,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
@@ -58,10 +58,26 @@
         </div>
     </nav>
 
-    <!--Post Details-->
-    <div class="row shadow mb-5 w3-animate-opacity">
-        placeholder
+    <!--Login / Register-->
+    <div class="row ">
+        <div class="col-3 shadow p-5 mb-5 w3-animate-opacity ">
+            {% block content %}
+            <form action="{{ url_for('register') }}" class="pt-5" method=post>
+                <dl>
+                    <dt>Username
+                    <dd><input name=username required style="width: 100%;" type=text>
+                    <dt>Email:
+                    <dd><input name=email required style="width: 100%;" type=email>
+                    <dt>Password:
+                    <dd><input name=password required style="width: 100%;" type=password>
+                    <dd><input class="btn btn-secondary" style="width: 100%;" type=submit value=Register>
+                </dl>
+            </form>
+            <br>
+            {% endblock %}
+        </div>
     </div>
+
 </div>
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
