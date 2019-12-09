@@ -40,9 +40,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
+                {% if session['logged in'] == True%}
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+                {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="/login">Login</a>
                 </li>
+                {% endif %}
                 <li class="nav-item">
                     <a class="nav-link" href="#">About Us</a>
                 </li>
@@ -116,38 +122,30 @@
         <div class="comment-wrapper col-10 p-5">
             <div class="panel panel-info">
                 <div class="panel-body">
+                    {% if session['logged in'] == True %}
                     <div class="input-group">
-                        <input aria-describedby="basic-addon1" aria-label="" class="form-control m-0" placeholder=""
-                               type="text">
-                        <div class="input-group-append">
-                            <button class="btn btn-secondary" type="button">COMMENT</button>
-                        </div>
+                        <form action="{{url_for('comment3')}}" method=post>
+                            <input aria-describedby="basic-addon1" aria-label="" class="form-control m-0" name="comment"
+                                   placeholder="" type="text">
+                            <div class="input-group-append">
+                                <button class="btn btn-secondary" type="submit">COMMENT</button>
+                            </div>
+                        </form>
                     </div>
-
-
+                    {% else %}
+                    <div class="alert alert-info" role="alert">
+                        Please login to comment; <a href="/login">Click here to Login</a>
+                    </div>
+                    {% endif %}
                     <hr>
-
+                    {% for entry in entries %}
                     <div>
-                        <strong>@RidickSmols</strong>
+                        <strong> {{entry[0]}} </strong>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, aspernatur at debitis
-                            eaque error nostrum odio officiis reiciendis sapiente suscipit.
+                            {{entry[1]}}
                         </p>
                     </div>
-                    <div>
-                        <strong>@Darkness1_</strong>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, aspernatur at debitis
-                            eaque error nostrum odio officiis reiciendis sapiente suscipit.
-                        </p>
-                    </div>
-                    <div>
-                        <strong>@Perissa</strong>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, aspernatur at debitis
-                            eaque error nostrum odio officiis reiciendis sapiente suscipit.
-                        </p>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

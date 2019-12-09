@@ -40,7 +40,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
-                {% if session['logged in'] == True%}
+                {% if session['logged in'] == True %}
                 <li class="nav-item active">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
@@ -71,22 +71,21 @@
             <img src="static/log.png" style="width: 100%;">
         </div>
         <div class="col-3 d-flex align-items-center">
-            <form action="{{ url_for('signin') }}" method=post>
+            <form action="{{ url_for('register') }}" method=post>
                 <dl>
                     <dt>Username
                     <dd><input name=username required style="width: 100%;" type=text>
+                    <dt>Email:
+                    <dd><input name=email required style="width: 100%;" style="width: 100%;" type=email>
                     <dt>Password:
-                    <dd><input name=password required style="width: 100%;" style="width: 100%;" type=password>
-                    <dd><input class="btn btn-secondary" style="width: 100%;" type=submit value=Login>
+                    <dd><input name=password required style="width: 100%;" type=password>
+                    <dd><input class="btn btn-secondary" style="width: 100%;" type=submit value=Register>
                 </dl>
                 <strong>
-                    New here?
+                    Already have an account?
                     <br>
-                    <a href="/reg">Click here to register</a>
+                    <a href="/login">Click here to login</a>
                 </strong>
-                <br>
-                <br>
-                <strong class="text-danger">{{ msg }}</strong>
             </form>
 
         </div>
