@@ -125,7 +125,7 @@
                 <div class="panel-body">
                     {% if session['logged in'] == True %}
                     <div class="input-group">
-                        <form action="{{url_for('comment2')}}" method=post>
+                        <form action="{{url_for('comment2')}}" class="d-flex" method=post style="width: 100%">
                             <input aria-describedby="basic-addon1" aria-label="" class="form-control m-0" name="comment"
                                    placeholder="" type="text">
                             <div class="input-group-append">
@@ -134,8 +134,8 @@
                         </form>
                     </div>
                     {% else %}
-                    <div class="alert alert-info" role="alert">
-                        Please login to comment; <a href="/login">Click here to Login</a>
+                    <div class="alert alert-info" role="alert" style="width: 100%">
+                        <a href="/login">Please login to comment</a>
                     </div>
                     {% endif %}
                     <hr>

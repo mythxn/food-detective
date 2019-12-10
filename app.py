@@ -13,23 +13,6 @@ app.secret_key = "super secret key"
 def root():
     return render_template('index.html')
 
-
-# # setup posts
-# @app.route('/posts/1')
-# def post1():
-#     return render_template('posts/1.html')
-#
-#
-# @app.route('/posts/2')
-# def post2():
-#     return render_template('posts/2.html')
-#
-#
-# @app.route('/posts/3')
-# def post3():
-#     return render_template('posts/3.html')
-
-
 # guestbook
 def _insert(name, email, comment):
     params = {'name': name, 'email': email, 'comment': comment}
@@ -159,7 +142,7 @@ def _newcomment2(username, comment):
 
 @app.route('/comment2', methods=['POST'])
 def comment2():
-    _newcomment1(session['username'], request.form['comment'])
+    _newcomment2(session['username'], request.form['comment'])
     return redirect(url_for('posts2'))
 
 
@@ -185,8 +168,14 @@ def _newcomment3(username, comment):
 
 @app.route('/comment3', methods=['POST'])
 def comment3():
-    _newcomment1(session['username'], request.form['comment'])
+    _newcomment3(session['username'], request.form['comment'])
     return redirect(url_for('posts3'))
+
+
+# error
+@app.route('/error')
+def error():
+    return render_template('error.html', msg="ERROR CODE")
 
 
 if __name__ == '__main__':
