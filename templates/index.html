@@ -55,8 +55,11 @@
             </ul>
 
             <form class="form-inline my-2 my-lg-0">
-                <input aria-label="Search" class="form-control mr-sm-2 m-0" placeholder="Search" type="text">
-                <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
+                <input aria-label="Search" class="form-control mr-sm-2 m-0" id="searchbar" onfocus="
+                       document.getElementById('food-car').style.display='none';
+                       document.getElementById('results').style.display='flex';" onkeyup="doSearch()"
+                       placeholder="Search"
+                       type="text">
             </form>
         </div>
     </nav>
@@ -101,7 +104,42 @@
             <span class="carousel-control-next-icon"></span>
         </a>
     </div>
+
+    <!--Search results-->
+    <div class="row shadow my-5 p-5" id="results" style="display: none">
+        <div class="col-8">
+            <img src="static/list.png" style="width: 100%;">
+        </div>
+        <div class="col-4 text-center d-flex align-items-center">
+            <div class="card" style="width: 100%">
+                <ul class="list-group list-group-flush" id="myUL">
+                    <li class="list-group-item"><a href="/posts/1">Italian Veg Pizza</a></li>
+                    <li class="list-group-item"><a href="/posts/2">The Flying Burger</a></li>
+                    <li class="list-group-item"><a href="/posts/3">Puri Sabji</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    function doSearch() {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById("searchbar");
+        filter = input.value.toUpperCase();
+        ul = document.getElementById("myUL");
+        li = ul.getElementsByTagName("li");
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = "";
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+</script>
 
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
