@@ -1,4 +1,5 @@
 import sqlite3
+import sys
 
 from flask import Flask, redirect, request, url_for, render_template, session
 
@@ -13,7 +14,21 @@ app.secret_key = "super secret key"
 def root():
     return render_template('index.html')
 
+
 # guestbook
+@app.route('/guestbook', methods=['POST', 'GET'])
+def gb():
+    try:
+        connection = sqlite3.connect(DB_FILE)
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM guestbook")
+        rv = cursor.fetchall()
+        cursor.close()
+        return render_template('guestbook.html', entries=rv)
+    except:
+        return render_template('error.html', msg=sys.exc_info()[1])
+
+
 def _insert(name, email, comment):
     params = {'name': name, 'email': email, 'comment': comment}
     connection = sqlite3.connect(DB_FILE)
@@ -21,16 +36,6 @@ def _insert(name, email, comment):
     cursor.execute("insert into guestbook VALUES (:name, :email, :comment)", params)
     connection.commit()
     cursor.close()
-
-
-@app.route('/guestbook', methods=['POST', 'GET'])
-def gb():
-    connection = sqlite3.connect(DB_FILE)
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM guestbook")
-    rv = cursor.fetchall()
-    cursor.close()
-    return render_template('guestbook.html', entries=rv)
 
 
 @app.route('/sign', methods=['POST'])
@@ -97,12 +102,15 @@ def logout():
 # comment1
 @app.route('/posts/1', methods=['POST', 'GET'])
 def posts1():
-    connection = sqlite3.connect(DB_FILE)
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM post1")
-    rv = cursor.fetchall()
-    cursor.close()
-    return render_template('/posts/1.html', entries=rv)
+    try:
+        connection = sqlite3.connect(DB_FILE)
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM post1")
+        rv = cursor.fetchall()
+        cursor.close()
+        return render_template('/posts/1.html', entries=rv)
+    except:
+        return render_template('error.html', msg=sys.exc_info()[1])
 
 
 def _newcomment1(username, comment):
@@ -123,12 +131,15 @@ def comment1():
 # comment2
 @app.route('/posts/2', methods=['POST', 'GET'])
 def posts2():
-    connection = sqlite3.connect(DB_FILE)
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM post2")
-    rv = cursor.fetchall()
-    cursor.close()
-    return render_template('/posts/2.html', entries=rv)
+    try:
+        connection = sqlite3.connect(DB_FILE)
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM posts2")
+        rv = cursor.fetchall()
+        cursor.close()
+        return render_template('/posts/2.html', entries=rv)
+    except:
+        return render_template('error.html', msg=sys.exc_info()[1])
 
 
 def _newcomment2(username, comment):
@@ -149,12 +160,15 @@ def comment2():
 # comment3
 @app.route('/posts/3', methods=['POST', 'GET'])
 def posts3():
-    connection = sqlite3.connect(DB_FILE)
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM post3")
-    rv = cursor.fetchall()
-    cursor.close()
-    return render_template('/posts/3.html', entries=rv)
+    try:
+        connection = sqlite3.connect(DB_FILE)
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM post3")
+        rv = cursor.fetchall()
+        cursor.close()
+        return render_template('/posts/3.html', entries=rv)
+    except:
+        return render_template('error.html', msg=sys.exc_info()[1])
 
 
 def _newcomment3(username, comment):
@@ -170,12 +184,6 @@ def _newcomment3(username, comment):
 def comment3():
     _newcomment3(session['username'], request.form['comment'])
     return redirect(url_for('posts3'))
-
-
-# error
-@app.route('/error')
-def error():
-    return render_template('error.html', msg="ERROR CODE")
 
 
 if __name__ == '__main__':
