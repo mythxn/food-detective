@@ -134,7 +134,7 @@ def posts2():
     try:
         connection = sqlite3.connect(DB_FILE)
         cursor = connection.cursor()
-        cursor.execute("SELECT * FROM posts2")
+        cursor.execute("SELECT * FROM post2")
         rv = cursor.fetchall()
         cursor.close()
         return render_template('/posts/2.html', entries=rv)
