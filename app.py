@@ -62,7 +62,7 @@ def _newaccount(username, email, password):
 @app.route('/register', methods=['POST'])
 def register():
     _newaccount(request.form['username'], request.form['email'], request.form['password'])
-    return redirect(url_for('reg'))
+    return redirect(url_for('login'))
 
 
 # login
