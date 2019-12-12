@@ -72,22 +72,25 @@
         </div>
 
         <!--Form-->
-        <div class="col-3 border-secondary rounded-lg shadow" style="background-color: #fefefd;">
-            {% block content %}
-            <form action="{{ url_for('sign') }}" class="pt-5" method=post>
-                <dl>
-                    <dt>Name
-                    <dd><input name=name required style="width: 100%;" type=text>
-                    <dt>Email:
-                    <dd><input name=email required style="width: 100%;" type=email>
-                    <dt>Comment:
-                    <dd><input name=comment required style="width: 100%;" type=text>
-                    <dd><input class="btn btn-secondary" style="width: 100%;" type=submit value=Add>
-                </dl>
-            </form>
-            <br>
-            {% endblock %}
+        <div class="col-3">
+            <div class="border-secondary rounded-lg shadow px-3" style="background-color: #fefefd;">
+                {% block content %}
+                <form action="{{ url_for('sign') }}" class="pt-5" method=post>
+                    <dl>
+                        <dt>Name
+                        <dd><input name=name required style="width: 100%;" type=text>
+                        <dt>Email:
+                        <dd><input name=email required style="width: 100%;" type=email>
+                        <dt>Comment:
+                        <dd><input name=comment required style="width: 100%;" type=text>
+                        <dd><input class="btn btn-secondary" style="width: 100%;" type=submit value=Add>
+                    </dl>
+                </form>
+                <br>
+                {% endblock %}
+            </div>
         </div>
+
     </div>
 </div>
 
