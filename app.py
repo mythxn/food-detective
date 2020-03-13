@@ -1,5 +1,7 @@
 import sqlite3
 import sys
+import requests
+from bs4 import BeautifulSoup
 
 from flask import Flask, redirect, request, url_for, render_template, session
 
@@ -9,22 +11,62 @@ DB_FILE = 'mydb.db'  # file for our Database
 app.secret_key = "super secret key"
 
 
-# set-up index page
+# set-up index page / as well as bs for 'recipe of the day'
 @app.route('/')
 def root():
-    return render_template('index.html')
+    url = requests.get("https://www.allrecipes.com/recipes/")
+    txt = url.text
+    soup = BeautifulSoup(txt, 'html.parser')
+
+    rotd= soup.find('article',class_='fixed-recipe-card' )
+    f_name = rotd.h3.text
+    f_desc = rotd.find('div',class_='fixed-recipe-card__description').text
+    f_link = rotd.a['href']
+    f_img = rotd.a.img['data-original-src']
+    return render_template('index.html', f_name=f_name, f_desc=f_desc, f_link=f_link, f_img=f_img)
+    
 
 
-# guestbook - display entries
+# guestbook - display entries / as well as bs for 'weather'
 @app.route('/guestbook', methods=['POST', 'GET'])
 def gb():
+    page=requests.get("https://weather.com/en-IN/weather/tenday/l/af60f113ba123ce93774fed531be2e1e51a1666be5d6012f129cfa27bae1ee6c")
+    content=page.content
+    soup=BeautifulSoup(content,"html.parser")
+    l=[]
+    weather=""
+    all=soup.find("div",{"class":"locations-title ten-day-page-title"}).find("h1").text
+    
+    table=soup.find_all("table",{"class":"twc-table"})
+    for items in table:
+        for i in range(len(items.find_all("tr"))-1):
+            d = {}
+            try:
+                d["date"]=items.find_all("span",{"class":"day-detail"})[i].text			
+                d["desc"]=items.find_all("td",{"class":"description"})[i].text
+                d["temp"]=items.find_all("td",{"class":"temp"})[i].text
+                d["wind"]=items.find_all("td",{"class":"wind"})[i].text
+                d["humidity"]=items.find_all("td",{"class":"humidity"})[i].text
+            except:
+                d["date"]="None"
+                d["desc"]="None"
+                d["temp"]="None"
+                d["wind"]="None"
+                d["humidity"]="None"
+            l.append(d)
+
+    q_url = "http://www.forbes.com/forbesapi/thought/uri.json?enrich=true&query=1&relatedlimit=5"
+    response = requests.get(q_url)
+    data = response.json()
+    qotd=data['thought']['quote'].strip()
+
     try:
         connection = sqlite3.connect(DB_FILE)
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM guestbook")
         rv = cursor.fetchall()
         cursor.close()
-        return render_template('guestbook.html', entries=rv)
+        return render_template('guestbook.html', entries=rv, weather=l, qotd=qotd)
     except:
         return render_template('error.html', msg=sys.exc_info()[1])
 
