@@ -58,8 +58,18 @@
 
     <!--Guestbook-->
     <div class="row shadow alert alert-warning my-5 w3-animate-opacity">
-        <h3>Quote of the day: {{ qotd }}</h3>
+        <h3>Food for thought: {{ qotd }}</h3>
      </div>
+
+     <div class="row shadow alert alert-danger my-5 w3-animate-opacity">
+        <h3>Public Service Announcement</h3>
+        <p>{{ whatC }}</p>
+        <p>{{ symptomsC }}</p>
+        <p>Are you experiencing any of the above? Please get in touch with: <br>
+            {{ contactC }}
+        </p>
+     </div>
+
     <div class="row shadow p-5 w3-animate-opacity">
         <!--Comments-->
         <div class="col-9">

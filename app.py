@@ -1,6 +1,7 @@
 import sqlite3
 import sys
 import requests
+import random
 from bs4 import BeautifulSoup
 
 from flask import Flask, redirect, request, url_for, render_template, session
@@ -14,15 +15,30 @@ app.secret_key = "super secret key"
 # set-up index page / as well as bs for 'recipe of the day'
 @app.route('/')
 def root():
+    # establish connection with the recipe website
     url = requests.get("https://www.allrecipes.com/recipes/")
     txt = url.text
     soup = BeautifulSoup(txt, 'html.parser')
 
+    # scrape recipe of the day
     rotd= soup.find('article',class_='fixed-recipe-card' )
-    f_name = rotd.h3.text
+    f_name = rotd.find('span',class_='fixed-recipe-card__title-link').text
     f_desc = rotd.find('div',class_='fixed-recipe-card__description').text
     f_link = rotd.a['href']
     f_img = rotd.a.img['data-original-src']
+
+    # save into db
+    connection = sqlite3.connect(DB_FILE)
+    cursor = connection.cursor()
+    params = {'name': f_name, 'desc': f_desc, 'link': f_link, 'img': f_img}
+    try:
+        cursor.execute("insert into recipeOfTheDay VALUES (:name, :desc, :link, :img)", params)
+    except:
+        print("Already in DB; Not updating.")
+    connection.commit()
+    cursor.close()
+
+    # display index page with recipe of the day
     return render_template('index.html', f_name=f_name, f_desc=f_desc, f_link=f_link, f_img=f_img)
     
 
@@ -30,6 +46,7 @@ def root():
 # guestbook - display entries / as well as bs for 'weather'
 @app.route('/guestbook', methods=['POST', 'GET'])
 def gb():
+    # establish connection with the weather website
     page=requests.get("https://weather.com/en-IN/weather/tenday/l/af60f113ba123ce93774fed531be2e1e51a1666be5d6012f129cfa27bae1ee6c")
     content=page.content
     soup=BeautifulSoup(content,"html.parser")
@@ -37,6 +54,7 @@ def gb():
     weather=""
     all=soup.find("div",{"class":"locations-title ten-day-page-title"}).find("h1").text
     
+    # scrape the weather table
     table=soup.find_all("table",{"class":"twc-table"})
     for items in table:
         for i in range(len(items.find_all("tr"))-1):
@@ -47,6 +65,18 @@ def gb():
                 d["temp"]=items.find_all("td",{"class":"temp"})[i].text
                 d["wind"]=items.find_all("td",{"class":"wind"})[i].text
                 d["humidity"]=items.find_all("td",{"class":"humidity"})[i].text
+
+                # save into db
+                connection = sqlite3.connect(DB_FILE)
+                cursor = connection.cursor()
+                params = {'date': d["date"], 'desc': d["desc"], 'temp': d["temp"], 'wind': d["wind"], 'humidity': d["humidity"]}
+                try:
+                    cursor.execute("insert into weather VALUES (:date, :desc, :temp, :wind, :humidity)", params)
+                except:
+                    print("Already in DB; Not updating.")
+                connection.commit()
+                cursor.close()
+
             except:
                 d["date"]="None"
                 d["desc"]="None"
@@ -55,10 +85,47 @@ def gb():
                 d["humidity"]="None"
             l.append(d)
 
-    q_url = "http://www.forbes.com/forbesapi/thought/uri.json?enrich=true&query=1&relatedlimit=5"
+    # connect and scrape random qoute to show as quote of the day from brainyquote
+    q_url = "https://www.brainyquote.com/topics/inspirational-quotes"
     response = requests.get(q_url)
-    data = response.json()
-    qotd=data['thought']['quote'].strip()
+    soup = BeautifulSoup(response.content,'html.parser')
+    quotes = soup.find_all('a', attrs={"title": "view quote"})
+    quotesList = []
+    for quote in quotes:
+        quotesList.append(quote.text)
+
+    # random quote
+    num = random.randint(0,len(quotesList))
+    qotd = quotesList[num]
+
+    # connect and scrape corona related data / what is corona?
+    c_url = "https://www.who.int/news-room/q-a-detail/q-a-coronaviruses"
+    response = requests.get(c_url)
+    soup = BeautifulSoup(response.content,'html.parser')
+    whatC = soup.find("div",{"class":"sf-accordion__content"}).find("p").text
+
+    # connect and scrape corona related data / corona symptoms
+    c_url = "https://www.who.int/health-topics/coronavirus"
+    response = requests.get(c_url)
+    soup = BeautifulSoup(response.content,'html.parser')
+    symptomsC = soup.find_all('span', attrs={"style": "background-color:transparent;text-align:inherit;text-transform:inherit;white-space:inherit;word-spacing:normal;caret-color:auto;"})[0].text
+
+    # connect and scrape corona related data / who to contact?
+    c_url = "https://www.dha.gov.ae/Covid19/Pages/home.aspx"
+    response = requests.get(c_url)
+    soup = BeautifulSoup(response.content,'html.parser')
+    contactC = soup.find_all('ul', attrs={"style": "list-style-type:disc;margin-left:22.15px;"})[1].text
+
+    # save into db
+    connection = sqlite3.connect(DB_FILE)
+    cursor = connection.cursor()
+    params = {'qotd': qotd}
+    try:
+        cursor.execute("insert into quoteOfTheDay VALUES (:qotd)", params)
+    except:
+        print("Already in DB; Not updating.")
+    connection.commit()
+    cursor.close()
 
     try:
         connection = sqlite3.connect(DB_FILE)
@@ -66,7 +133,7 @@ def gb():
         cursor.execute("SELECT * FROM guestbook")
         rv = cursor.fetchall()
         cursor.close()
-        return render_template('guestbook.html', entries=rv, weather=l, qotd=qotd)
+        return render_template('guestbook.html', entries=rv, weather=l, qotd=qotd, whatC=whatC, symptomsC=symptomsC, contactC=contactC)
     except:
         return render_template('error.html', msg=sys.exc_info()[1])
 
