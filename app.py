@@ -98,6 +98,17 @@ def gb():
     num = random.randint(0,len(quotesList))
     qotd = quotesList[num]
 
+    # save into db
+    connection = sqlite3.connect(DB_FILE)
+    cursor = connection.cursor()
+    params = {'qotd': qotd}
+    try:
+        cursor.execute("insert into quoteOfTheDay VALUES (:qotd)", params)
+    except:
+        print("Already in DB; Not updating.")
+    connection.commit()
+    cursor.close()
+
     # connect and scrape corona related data / what is corona?
     c_url = "https://www.who.int/news-room/q-a-detail/q-a-coronaviruses"
     response = requests.get(c_url)
@@ -116,16 +127,6 @@ def gb():
     soup = BeautifulSoup(response.content,'html.parser')
     contactC = soup.find_all('ul', attrs={"style": "list-style-type:disc;margin-left:22.15px;"})[1].text
 
-    # save into db
-    connection = sqlite3.connect(DB_FILE)
-    cursor = connection.cursor()
-    params = {'qotd': qotd}
-    try:
-        cursor.execute("insert into quoteOfTheDay VALUES (:qotd)", params)
-    except:
-        print("Already in DB; Not updating.")
-    connection.commit()
-    cursor.close()
 
     try:
         connection = sqlite3.connect(DB_FILE)
