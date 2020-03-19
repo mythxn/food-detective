@@ -5,11 +5,13 @@ import random
 from bs4 import BeautifulSoup
 from googlesearch import search 
 from flask import Flask, redirect, request, url_for, render_template, session
+from datetime import datetime
 
 # create a flask app
 app = Flask(__name__)  # our Flask app
 DB_FILE = 'mydb.db'  # file for our Database
 app.secret_key = "super secret key"
+currentMonth = datetime.now().month
 
 
 # set-up index page / as well as bs for 'recipe of the day'
@@ -42,9 +44,20 @@ def root():
     query = "restaurants near me"
     for j in search(query, tld="ae", num=1, stop=1, pause=2): 
         restaurant = j
-    	
+		
+    if (currentMonth >= 5 and currentMonth <10):
+        season = "Summer"
+        query2 = "cold recipe for hot weather"
+		
+    else:
+        season = "Winter"
+        query2 = "Winter recipe for cold weather"
+
+    for k in search(query2, tld="ae", num=1, stop=1, pause=2): 
+        recipe = k
+
     # display index page with recipe of the day
-    return render_template('index.html', f_name=f_name, f_desc=f_desc, f_link=f_link, f_img=f_img, restaurantnearme = restaurant)
+	return render_template('index.html', f_name=f_name, f_desc=f_desc, f_link=f_link, f_img=f_img, restaurantnearme = restaurant, season = season, recipe = recipe)
 
 # guestbook - display entries / as well as bs for 'weather'
 @app.route('/guestbook', methods=['POST', 'GET'])
