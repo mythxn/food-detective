@@ -46,7 +46,7 @@ def root():
     for j in search(query, tld="ae", num=1, stop=1, pause=2):
         restaurant = j
 
-    if (currentMonth >= 5 and currentMonth < 10):
+    if (currentMonth >= 4 and currentMonth < 10):
         season = "Summer"
         query2 = "cold recipe for hot weather"
 
@@ -143,15 +143,14 @@ def gb():
     c_url = "https://www.who.int/health-topics/coronavirus"
     response = requests.get(c_url)
     soup = BeautifulSoup(response.content, 'html.parser')
-    symptomsC = soup.find_all('span', attrs={
-                              "style": "background-color:transparent;text-align:inherit;text-transform:inherit;white-space:inherit;word-spacing:normal;caret-color:auto;"})[0].text
+    symptomsC = soup.find("div", {"class": "sf_colsOut tabContent"}).find_all("p")[1].text
 
     # connect and scrape corona related data / who to contact?
     c_url = "https://www.dha.gov.ae/Covid19/Pages/home.aspx"
     response = requests.get(c_url)
     soup = BeautifulSoup(response.content, 'html.parser')
     contactC = soup.find_all(
-        'ul', attrs={"style": "list-style-type:disc;margin-left:22.15px;"})[1].text
+        'ul', attrs={"style": "margin-left:22.15px;list-style-type:disc;"})[1].text
 
     try:
         connection = sqlite3.connect(DB_FILE)
